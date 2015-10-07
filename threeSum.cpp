@@ -20,11 +20,7 @@ public:
                 int b = nums[st];
                 int c = nums[et];
                 if (a+b+c == 0) {
-                    vector<int> temp;
-                    temp.push_back(a);
-                    temp.push_back(b);
-                    temp.push_back(c);
-                    ans.push_back(temp);
+                    ans.push_back(vector<int> {a, b, c});
                     st++;
                     et--;
                     while (st < et && nums[st] == nums[st-1])
