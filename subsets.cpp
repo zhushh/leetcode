@@ -14,14 +14,14 @@ public:
         int n = nums.size();
         for (int k = 1; k <= n; k++) {
             vector<int> cur(k);
-            addKthSubset(nums, ans, cur, 0, 0, n);
+            addKthSizeSubset(nums, ans, cur, 0, 0, n);
         }
         ans.push_back(vector<int>());
         return ans; 
     }
 
 private:
-    void addKthSubset(vector<int> &nums, vector<vector<int> > &ans, vector<int> &cur, int idx, int curIdx, int& n) {
+    void addKthSizeSubset(vector<int> &nums, vector<vector<int> > &ans, vector<int> &cur, int idx, int curIdx, int& n) {
         if (curIdx == cur.size()) {
             ans.push_back(cur);
             return;
@@ -30,7 +30,7 @@ private:
         int left = cur.size() - curIdx - 1;
         for (int i = idx; i < n - left; i++) {
             cur[curIdx] = nums[i];
-            addKthSubset(nums, ans, cur, i+1, curIdx+1, n);
+            addKthSizeSubset(nums, ans, cur, i+1, curIdx+1, n);
         }
     }
 };
