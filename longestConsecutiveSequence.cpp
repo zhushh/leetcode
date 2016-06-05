@@ -3,33 +3,35 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <map>
+#include <set>
 using namespace std;
 
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        unordered_map<int, bool> used;
-        for (auto i : nums) used[i] = false;
+        unordered_set<int> numsSet(nums.begin(), nums.end());
+        int maxn = 0;
+        int curCount = 0;
+        int curVal = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            curCount = 0;
+            if (numsSet.empty())
+                break;
 
-        int longest = 0;
-        for (auto i : nums) {
-            if (used[i]) continue;
-
-            used[i] = true;
-            int length = 1;
-
-            for (int j = i + 1; used.find(j) != used.end(); j++) {
-                used[j] = true;
-                ++length;
+            curVal = nums[i];
+            while (numsSet.find(curVal) != numsSet.end()) {
+                curCount++;
+                numsSet.erase(curVal--);
             }
 
-            for (int j = i - 1; used.find(j) != used.end(); --j) {
-                used[j] = true;
-                ++length;
+            curVal = nums[i]+1;
+            while (numsSet.find(curVal) != numsSet.end()) {
+                curCount++;
+                numsSet.erase(curVal++);
             }
-            longest = max(longest, length);
+            maxn = maxn < curCount? curCount : maxn;
         }
-        return longest;
+
+        return maxn;
     }
 };
